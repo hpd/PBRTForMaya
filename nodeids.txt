@@ -1,0 +1,88 @@
+Node IDs
+
+PBRT For Maya
+renderer    PBRTRenderSettings.py 0x87040
+
+materials   fourier.py          0x87041
+materials   mix.py              0x87042
+materials   uber.py             0x87043
+materials   mirror.py           0x87044
+materials   matte.py            0x87045
+materials   plastic.py          0x87046
+materials   translucent.py      0x87047
+materials   glass.py            0x87048
+materials   hair.py             0x87049
+materials   kdsubsurface        0x8704A
+materials   metal               0x8704B
+materials   substrate           0x8704C
+materials   subsurface          0x8704D
+materials   disney              0x8704E
+
+lights      area.py             0x87050
+lights      infinite.py         0x87051
+
+shapes      plymesh.py          0x87052
+shapes      cone.py             0x87053
+/ shapes      curve.py             0x87054
+shapes      cylinder.py         0x87055
+shapes      disk.py             0x87056
+/ shapes      heightfield.py      0x87057
+
+volumes     homogeneous.py      0x87058
+volumes     heterogeneous.py      0x87059
+
+shapes      hyperboloid.py      0x8705A
+shapes      paraboloid.py       0x8705B
+shapes      sphere.py           0x8705C
+shapes      pbrtInclude.py      0x8705D
+/ shapes      nurbs.py            0x8705E
+/ shapes      loopsubdiv.py       0x8705F
+
+textures    mix.py              0x87060
+textures    scale.py            0x87061
+textures    wrinkled.py         0x87062
+textures    constant.py         0x87063
+textures    blackbody.py        0x87064
+textures    fbm.py              0x87065
+textures    marble.py           0x87066
+textures    windy.py            0x87067
+textures    xyz.py              0x87068
+textures    xyy.py              0x87069
+textures    uv.py               0x8706A
+textures    bilerp.py           0x8706B
+
+
+
+Mitsuba For Maya
+materials	roughplastic.py		0x87000
+materials	thindielectric.py	0x87001
+materials	conductor.py		0x87002
+materials	diffuse.py			0x87003
+materials	dielectric.py		0x87004
+volumes		homogeneous.py		0x87005
+materials	plastic.py			0x87006
+materials	roughconductor.py	0x87008
+materials	roughdielectric.py	0x87009
+materials	roughdiffuse.py		0x8700A
+materials	phong.py			0x8700B
+materials	ward.py				0x8700C
+materials	difftrans.py		0x8700D
+materials	coating.py			0x8700E
+materials	roughcoating.py		0x8700F
+
+materials	bump.py				0x87010
+materials	mixturebsdf.py		0x87011
+materials	mask.py				0x87012
+materials	twosided.py			0x87013
+materials	blendbsdf.py		0x87014
+materials	hk.py				0x87015
+materials	dipole.py			0x87016
+materials	heterogenous.py		0x87017
+
+materials	irawan.py			0x87020
+renderer	MitsubaRenderSettings.py	0x87021
+lights		arealight.py		0x87024
+
+lights		sunsky.py			0x87031
+lights		envmap.py			0x87032
+volumes		volume.py			0x87033

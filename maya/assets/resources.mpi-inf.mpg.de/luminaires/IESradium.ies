@@ -1,0 +1,16 @@
+ IESNA:LM-63-1995
+ [TEST] CTU Prague, Fel Katedra elektroenergetiky
+ [MANUFAC] unknown                 
+ [LUMCAT] unknown
+ [LUMINAIRE] Wall light with fluorescent light bulb lamp           
+ [LAMP] Radium NL 36W/21               
+ [DATE] 3.6.2008, Ing.Marek Balsky, Bc.Jiri Drahokoupil
+ [OTHER]		
+ TILT=NONE
+ 1 3300 1 19 3 1 2 10 1.242 17.5
+ 1.0 1.0 36
+ 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
+ 0 45 90
+ 1172 1179.72 1196.52 1136.4 1074.4 998.28 880.56 684.12 306.4 160.2 40.16 11.6 2.2 0 0 0 0 0 0
+ 1172 1167 1183 1161 1098 1023 923 791 646 442 235 105.2 36.4 10.2 2.52 0 0 0 0
+ 1172 1165 1154 1132 1102 1048 965 846 661 450.52 244.12 78.12 7.9 0 0 0 0 0 0

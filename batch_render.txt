@@ -1,0 +1,7 @@
+Windows
+cd c:\path\to\maya\scenes
+"c:\Program Files\Autodesk\Maya2016\bin\Render.exe" -s 1 -e 2 -b 1 maya_pbrt_scene_file.ma
+
+Mac
+cd /path/to/maya/scenes
+/Applications/Autodesk/maya2016/Maya.app/Contents/bin/Render -s 1 -e 2 -b 1 maya_pbrt_scene_file.ma

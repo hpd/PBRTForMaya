@@ -1,0 +1,14 @@
+IESNA:LM-63-1995
+[TEST]		CTU Prague, FEL Katedra elektroenergetiky
+[MANUFAC]	Osram                
+[LUMCAT]	Osram 
+[LUMINAIRE]	Reflector lamp            
+[LAMP]		Osram CONCENTRA PAR 38, E27, 240V, 80W                 
+[DATE]		3.6.2008, Ing.Marek Balsky, Bc.Jiri Drahokoupil
+[OTHER]		
+TILT=NONE
+1 1300 1 19 1 1 2 -0.18 0 0.16
+1.0 1.0 80
+0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
+0
+1821.5 1559.4 1063.1 597.1 310.1 181.2 123.3 103.7 84.7 71.6 47.6 18.5 5.7 2.3 1.1 1.2 0.9 0.7 0

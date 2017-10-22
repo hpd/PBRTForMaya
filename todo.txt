@@ -1,0 +1,204 @@
+x figure out path for efficient geometry referencing
+x make external file references non-absolute paths
+x add support for textured inputs
+x remove duplicate texture declarations
+x add support for mix material
+x add support for arbitrary texturing networks
+x add support for mix texture
+x add support for scale texture
+x add support for area lights
+x add film render settings
+x add sampler render settings
+x add accelerator render settings
+x add filter render settings
+x figure out camera mismatch
+x add integrator render settings
+x update plugin ids
+x expand list of supported materials
+x expand list of supported light types
+x add goniometric light type
+x find example data for goniometric light type
+x   http://resources.mpi-inf.mpg.de/mpimodel/v1.0/luminaires/index.html
+x add support for pre-defined list of subsurface material values
+x add support for bump mapping
+x add comment at head of exported file
+x add support for volumetric shading modes
+x expose 'remaproughness' boolean
+x export uroughness and vroughness parameters
+x check ortho camera projection match
+x add camera override settings
+x support depth of field settings for perspective camera
+x add support for general 2d texture controls (u/v scale, u/v delta)
+x update Readme to point to PBRT and Maya.env
+x support the 'projection' light type
+x - connect a 'goniometric' texture to the spot light's color attribute
+x add support for using a Maya Spot light to spawn a goniometric light, with the proper transform stack
+x - connect a 'goniometric' texture to the spot light's dropoff attribute
+x flip projected textures, horizontal
+x make material, light and volumetric module import automatic
+x support .spd files as input to color parameters
+x switch object declaration to use instancing
+x support procedural texture nodes
+x add uv mapping controls to dots, imagemap, checkerboard, 
+x -- highjacked the Maya 'cloth' texture to drive the PBRT random 'dots' texture
+x make sure lights can take .spd files as inputs
+x -- infinite, point, directional, area, spot, projector, goniometric
+x -- look at scaling of light spd files
+x remove 'goniometric' and 'dots' nodes, as they are redundant with Maya-native nodes
+x add support for rotating environment maps
+x -- rotate Y
+x support area lights properly, i.e. don't instance the geo
+x convert MERL BRDFs to layerlab .bsdf format
+x add aetemplate for shaders referencing external files
+x -- fourier material
+x support specific pbrt path saved in file
+x remove duplicate lines in render log
+x add support for differences between 'book' and 'master' branch
+x add note on plyfile python library dependency
+x add an 'export only' option
+x add support for film 'diagonal' parameter
+x -- specifies sensor diagonal length in mm (default = 35)
+x import ply geometry files directly
+x export ply geometry files directly
+x -- add Python-based options for ply translator
+x -- in world space or object space
+x support the 'blackbody' and 'xyz' color specifications.
+x -- xyz specifies a triple of chromaticities
+x -- blackbody specifies two floats, a color temperature and an intensity
+x add support for basic procedural 'shapes', i.e. geometry generation plugins
+x -- cone, cylinder, disk, hyperboloid, paraboloid, sphere, pbrt
+x support xyY chromaticity specification. let exporter convert to XYZ
+x support motion blur on Maya meshes
+x -- for ply export path, export in object space and Maya's transforms on geo
+x respect 'export verbosity' flag in io.py
+x ply export / import
+x -- support export of triangulated meshes, using Maya's native triangulation
+x -- support export of instanced / deforming meshes
+x -- support ply export of per-vertex color
+x -- support ply import of per-vertex color
+x -- debug normal export support. ex. sphere
+x allow texture nodes to be evaluated as scalar or color/spectrum
+x remove duplicate texture definitions
+x add the uv texture node
+x support creating volumes without surface assignments
+x -- feature in pbrt only works with the volumetric path tracer integrator
+x support translating Maya's colorspace controls to PBRT's imagemap 'gamma' on/off boolean
+x support shadowalpha and alpha on generated plymesh calls
+x support shadowalpha and alpha on the procedural plymesh
+x -- feature in pbrt only works with the path tracer integrator, and only non-procedural geometry
+x add uv filter size and uv coord support to 2d texture nodes, like uv
+x -- allows Maya texture assignment UI to work properly
+x add 3d placement matrix support to 3d texture nodes
+x - separate modes/nodes for 3d versions of textures?
+x fix 'shadowalpha' warnings for 'book' export
+x add presets for xyY and xyz
+x support base material materials - lambert, phong, blinn
+x add support for Disney BRDF model
+x support ptex texture type
+x support bilerp texture type
+
+create example scenes showing each supported feature
+x materials
+x textures
+x bump mapping
+x volumes
+x shapes
+x motion blur
+x cameras
+x -- maya camera with dof
+x -- realistic camera
+x 2x1 resolution for environment render
+x kd subsurface and subsurface
+x integrators
+/ accelerators
+/ samplers
+
+Extended feature support / exercises for the reader
+===================================================
+investigate negative scale required for bump
+- create example scene showing how bump mapping works in pbrt wrt the values in a texture
+
+rework motion blur export support to change the time only once
+- build list of objects to be exported, store transforms for all at time 0, change time, store transforms for all at time 1, change time back to time 0, export using stored transforms.
+
+support heterogeneous medium converting other volumetric grid formats to the .pbrt text volumetric grid format
+- choose an input volumetric grid format to support
+
+add support for more specific procedural 'shapes', i.e. geometry generation plugins, beyond polygons
+- nurbs, loopsubdiv, curve, heightfield
+
+unify focaldistance, lensradius, aperturediameter and focusdistance controls from realistic and perspective cameras
+
+investigate adding parameters to standard Maya nodes when renderer loads
+- add support for cylindrical, spherical and projective texture mapping: non-UV texture mapping
+- support texture filtering, anisotropy controls
+
+create translator plugin that supports pbrt export
+- add support for exporting full pbrt scenes using File > Export All
+- add support for exporting full pbrt scenes using File > Export Selection
+--- with flags for 'objects', 'materials', 'lights', 'cameras', ...
+
+Bugs
+====
+bsdf files generted from MERL data show ringing in high frequency lighting environments
+
+LookAt transforms don't interpolate properly with motion blur
+
+Area light kills contribution of infinite (environment) lights
+
+Mix material - behavior of amount is inverted from description, and texture node
+-- https://github.com/mmp/pbrt-v3/blob/master/src/materials/mixmat.cpp#L52
+-- https://github.com/mmp/pbrt-v3/blob/master/src/textures/mix.h#L60
+-- verify that mix material and mix texture 'amount' controls are inverted
+
+Interreflections glow (add energy) when kdsubsurface parameters are at their defaults, or when scale > 1
+
+Assert/failure when lookat 'up' is at origin (0, 0, 0)
+
+Isolate issue of 'hyperboloid' stalling render
+- default parameters lead to infinite loop. this is known.
+
+Poly objects faceted when global homogoneous volume used.
+
+Backburner
+==========
+Ask about consistency of texture scale / offset control through Transform blocks vs. explicit parameters
+- Ex. Wrinkled vs. ImageMap
+- Is the expectation that materials are included in the object declaration - if an object scale, the textures should as well
+
+Ask about lack of file-based definition for the heightfield and for volumetric grids
+- this may be specifically so students can implement support
+
+LookAt transform takes a list of 9 floats. Transform takes an array. Why are these different?
+
+Add support for spectral output to EXR
+- in imageio.h, imageio.cpp, film.cpp
+
+Display render log output as render progresses
+- look into adding progress bar
+
+Report limitation that pbrt only supports normals and uvs on verts, not as separate lists specific to each face (plymesh.cpp)
+
+Notes / references
+==================
+
+https://github.com/haggi/OpenMaya/blob/master/src/common/python/Renderer/__init__.py
+
+https://github.com/CountZer0/PipelineConstructionSet/blob/master/python/maya/site-packages/pymel-1.0.3/examples/AETemplates.py
+
+Location to copy .mod and .xml files
+- Is there a better place, i.e. in /Users/Shared/Autodesk/.... ?
+/Applications/Autodesk/maya2016/Maya.app/Contents/modules/
+/Applications/Autodesk/maya2016/Maya.app/Contents/bin/rendererDesc/
+
+Maya MFnMesh API
+http://docs.autodesk.com/MAYAUL/2014/ENU/Maya-API-Documentation/index.html?url=python-api/MFnMesh.html,topicNumber=python_api_MFnMesh_html9fe11b33-f164-4268-a8ba-20d485bdca71
+
+http://ewertb.soundlinker.com/api/api.008.php
+
+
+
+
+
+
+

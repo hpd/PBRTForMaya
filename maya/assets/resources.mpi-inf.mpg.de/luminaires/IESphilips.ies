@@ -1,0 +1,14 @@
+ IESNA:LM-63-1995
+ [TEST] CTU Prague, Fel Katedra elektroenergetiky
+ [MANUFAC] Philips                 
+ [LUMCAT] Philips 
+ [LUMINAIRE] Discharge lamp with warm color to be used in open luminairs          
+ [LAMP] Philips Master SDW-T 100W/825 PG12-1                 
+ [DATE] 3.6.2008, Ing.Marek Balsky, Bc.Jiri Drahokoupil
+ [OTHER]		
+ TILT=NONE
+ 1 4800 1 19 1 1 2 -0.175 0 0
+ 1.0 1.0 100
+ 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
+ 0
+ 426 426.52 457 521.52 630 761 865 906 845 758 676 590.52 524.52 395.52 192.4 65.2 46.6 28.32 7.8

@@ -1,0 +1,16 @@
+ IESNA:LM-63-1995
+ [TEST]		CTU Prague, FEL Katedra elektroenergetiky
+ [MANUFAC]	Louis Poulsen                 
+ [LUMCAT]	Louis Poulsen  94-02511 
+ [LUMINAIRE]	Wall lamp with cylindrical lampshade(shutter)            
+ [LAMP]		Radium Ralux RX-D/E 13W/840                 
+ [DATE]		3.6.2008, Ing.Marek Balsky, Bc.Jiri Drahokoupil
+ [OTHER]		
+ TILT=NONE
+ 1 900 1 37 1 1 2 -0.165 0 0.165
+ 1.0 1.0 13.0
+ 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 105 110 115 120 125 130 135 140 145 150 155 160 165 170 175 180
+ 0
+ 122.4 125.6 134 128 126.8 126 125.2 122 115.2 106.4 96.8 86.8 77.2 70.4 64.8 59.2 54.8 50.8 49.2 47.6 45.76 43.36 40.76 38.8 
+ 36.68 34.52 32.36 30.2 28.04 25.88 23.72 21.56 19.4 17.24 12.01 10.87 8.27
+

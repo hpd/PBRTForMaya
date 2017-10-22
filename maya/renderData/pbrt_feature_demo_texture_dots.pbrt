@@ -1,0 +1,219 @@
+# Exported for PBRT Version : v3 Book
+
+Film "image"
+	"integer yresolution" [540]
+	"float scale" [1.0]
+	"float diagonal" [41.3021855479]
+	"integer xresolution" [960]
+
+Sampler "halton"
+	"integer pixelsamples" [1024]
+
+PixelFilter "gaussian"
+	"float ywidth" [2.0]
+	"float xwidth" [2.0]
+	"float alpha" [2.0]
+
+Integrator "path"
+	"integer maxdepth" [5]
+
+Accelerator "bvh"
+	"string splitmethod" ["sah"]
+	"integer maxnodeprims" [4]
+
+# Camera begin
+Scale -1 1 1
+LookAt 0.000000 4.250000 -45.000000 -0.000000 -0.177129 -2.878684 -0.000000 0.994522 0.104528
+Camera "perspective"
+	"float fov" [26.9914665616]
+	"float screenwindow" [-1.0 1.0 -0.5625 0.5625]
+# Camera end
+
+WorldBegin
+	AttributeBegin
+		Rotate 90.0 0.0 1.0 0.0
+		Rotate -90.0 1.0 0.0 0.0
+		Scale -1 1 1
+		LightSource "infinite"
+			"string mapname" ["../sourceimages/mitsuba_sunsky.exr"]
+			"integer nsamples" [1]
+			"rgb L" [1.0 1.0 1.0]
+	AttributeEnd
+
+	Texture "cloth1" "spectrum" "dots"
+		"rgb inside" [0.0358979851007 0.578999996185 0.500340759754]
+		"float udelta" [0.0]
+		"rgb outside" [1.0 0.372509241104 0.061999976635]
+		"float uscale" [16.0]
+		"float vdelta" [0.0]
+		"float vscale" [16.0]
+
+	Texture "checker1" "spectrum" "checkerboard"
+		"float vdelta" [0.0]
+		"float udelta" [0.0]
+		"rgb tex1" [0.360000014305 0.360000014305 0.360000014305]
+		"rgb tex2" [0.0900000035763 0.0900000035763 0.0900000035763]
+		"float uscale" [128.0]
+		"float vscale" [128.0]
+
+	MakeNamedMaterial "pbrt_uber"
+		"rgb opacity" [1.0 1.0 1.0]
+		"float index" [1.5]
+		"texture Kd" ["cloth1"]
+		"float roughness" [0.0250000003725]
+		"rgb Ks" [0.75 0.75 0.75]
+		"rgb Kr" [0.0 0.0 0.0]
+		"bool remaproughness" ["true"]
+		"string type" ["uber"]
+
+	MakeNamedMaterial "pbrt_mirror"
+		"rgb Kr" [1.0 1.0 1.0]
+		"string type" ["mirror"]
+
+	MakeNamedMaterial "pbrt_glossy"
+		"rgb opacity" [1.0 1.0 1.0]
+		"float index" [1.5]
+		"rgb Kd" [0.180000007153 0.180000007153 0.180000007153]
+		"float roughness" [0.0250000003725]
+		"rgb Ks" [0.75 0.75 0.75]
+		"rgb Kr" [0.0 0.0 0.0]
+		"bool remaproughness" ["true"]
+		"string type" ["uber"]
+
+	MakeNamedMaterial "pbrt_ground"
+		"float sigma" [0.0]
+		"string type" ["matte"]
+		"texture Kd" ["checker1"]
+
+	MakeNamedMaterial "pbrt_grey18"
+		"float sigma" [0.0]
+		"string type" ["matte"]
+		"rgb Kd" [0.180000007153 0.180000007153 0.180000007153]
+
+	ObjectBegin "|MitsubaSphere|Mesh"
+		# Maya Geometry : |MitsubaSphere|Mesh|MeshShape
+		NamedMaterial "pbrt_uber"
+		Shape "plymesh"
+			"float alpha" [1.0]
+			"string filename" ["__MitsubaSphere__Mesh__MeshShape.ply"]
+	ObjectEnd
+
+	AttributeBegin
+		# Maya Transform : |MitsubaSphere|Mesh
+		Transform 
+			[-3.5 0.0 -4.28626379702e-16 0.0
+			 0.0 3.5 0.0 0.0
+			 4.28626379702e-16 0.0 -3.5 0.0
+			 3.0 -3.0 0.0 1.0]
+		ObjectInstance "|MitsubaSphere|Mesh"
+	AttributeEnd
+
+	ObjectBegin "|referenceSpheres|chromeSphere"
+		# Maya Geometry : |referenceSpheres|chromeSphere|chromeSphereShape
+		NamedMaterial "pbrt_mirror"
+		Shape "plymesh"
+			"float alpha" [1.0]
+			"string filename" ["__referenceSpheres__chromeSphere__chromeSphereShape.ply"]
+	ObjectEnd
+
+	AttributeBegin
+		# Maya Transform : |referenceSpheres|chromeSphere
+		Transform 
+			[1.0 0.0 0.0 0.0
+			 0.0 1.0 0.0 0.0
+			 0.0 0.0 1.0 0.0
+			 7.5 -2.75 -8.0 1.0]
+		ObjectInstance "|referenceSpheres|chromeSphere"
+	AttributeEnd
+
+	ObjectBegin "|referenceSpheres|glossySphere"
+		# Maya Geometry : |referenceSpheres|glossySphere|glossySphereShape
+		NamedMaterial "pbrt_glossy"
+		Shape "plymesh"
+			"float alpha" [1.0]
+			"string filename" ["__referenceSpheres__glossySphere__glossySphereShape.ply"]
+	ObjectEnd
+
+	AttributeBegin
+		# Maya Transform : |referenceSpheres|glossySphere
+		Transform 
+			[1.0 0.0 0.0 0.0
+			 0.0 1.0 0.0 0.0
+			 0.0 0.0 1.0 0.0
+			 0.0 -2.75 -8.0 1.0]
+		ObjectInstance "|referenceSpheres|glossySphere"
+	AttributeEnd
+
+	ObjectBegin "|MitsubaSphere|Mesh1"
+		# Maya Geometry : |MitsubaSphere|Mesh1|Mesh1Shape
+		NamedMaterial "pbrt_uber"
+		Shape "plymesh"
+			"float alpha" [1.0]
+			"string filename" ["__MitsubaSphere__Mesh1__Mesh1Shape.ply"]
+	ObjectEnd
+
+	AttributeBegin
+		# Maya Transform : |MitsubaSphere|Mesh1
+		Transform 
+			[-3.5 0.0 -4.28626379702e-16 0.0
+			 0.0 3.5 0.0 0.0
+			 4.28626379702e-16 0.0 -3.5 0.0
+			 3.0 -3.0 0.0 1.0]
+		ObjectInstance "|MitsubaSphere|Mesh1"
+	AttributeEnd
+
+	ObjectBegin "|ground"
+		# Maya Geometry : |ground|groundShape
+		NamedMaterial "pbrt_ground"
+		Shape "plymesh"
+			"float alpha" [1.0]
+			"string filename" ["__ground__groundShape.ply"]
+	ObjectEnd
+
+	AttributeBegin
+		# Maya Transform : |ground
+		Transform 
+			[1000.0 0.0 0.0 0.0
+			 0.0 10.0 0.0 0.0
+			 0.0 0.0 1000.0 0.0
+			 0.0 6.0 0.0 1.0]
+		ObjectInstance "|ground"
+	AttributeEnd
+
+	ObjectBegin "|materialSphere"
+		# Maya Geometry : |materialSphere|materialSphereShape
+		NamedMaterial "pbrt_uber"
+		Shape "plymesh"
+			"float alpha" [1.0]
+			"string filename" ["__materialSphere__materialSphereShape.ply"]
+	ObjectEnd
+
+	AttributeBegin
+		# Maya Transform : |materialSphere
+		Transform 
+			[3.0 0.0 0.0 0.0
+			 0.0 3.0 0.0 0.0
+			 0.0 0.0 3.0 0.0
+			 -4.0 0.5 0.0 1.0]
+		ObjectInstance "|materialSphere"
+	AttributeEnd
+
+	ObjectBegin "|referenceSpheres|diffuseSphere"
+		# Maya Geometry : |referenceSpheres|diffuseSphere|diffuseSphereShape
+		NamedMaterial "pbrt_grey18"
+		Shape "plymesh"
+			"float alpha" [1.0]
+			"string filename" ["__referenceSpheres__diffuseSphere__diffuseSphereShape.ply"]
+	ObjectEnd
+
+	AttributeBegin
+		# Maya Transform : |referenceSpheres|diffuseSphere
+		Transform 
+			[1.0 0.0 0.0 0.0
+			 0.0 1.0 0.0 0.0
+			 0.0 0.0 1.0 0.0
+			 -7.5 -2.75 -8.0 1.0]
+		ObjectInstance "|referenceSpheres|diffuseSphere"
+	AttributeEnd
+
+WorldEnd
