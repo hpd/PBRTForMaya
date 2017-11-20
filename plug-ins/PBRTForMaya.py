@@ -20,8 +20,12 @@ from renderer import (
     PBRTRenderSettings,
     PBRTRenderer)
 
-from translators import (
-    ply)
+try:
+    from translators import ply
+except Exception, e:
+    print( "%s - Unable to load .ply format translator" % (kPluginName))
+    print( repr(e) )
+    ply = None
 
 import lights
 import materials
@@ -113,26 +117,27 @@ def initializePlugin(mobject):
     # Register translator nodes
     try:
         for translatorModule in translatorModules:
-            moduleName = os.path.split( inspect.getfile(translatorModule) )[-1].split('.')[0]
+            if translatorModule:
+                moduleName = os.path.split( inspect.getfile(translatorModule) )[-1].split('.')[0]
 
-            translatorOptions = None
-            if translatorModule.kPluginTranslatorOptionsUIFunction:
-                translatorOptions = createMelPythonCallback(
-                    moduleName, 
-                    translatorModule.kPluginTranslatorOptionsUIFunction,
-                    parametersList=[('string', 'parent'), 
-                        ('string', 'action'), 
-                        ('string', 'initialSettings'), 
-                        ('string', 'resultCallback')],
-                    returnType="int")
+                translatorOptions = None
+                if translatorModule.kPluginTranslatorOptionsUIFunction:
+                    translatorOptions = createMelPythonCallback(
+                        moduleName, 
+                        translatorModule.kPluginTranslatorOptionsUIFunction,
+                        parametersList=[('string', 'parent'), 
+                            ('string', 'action'), 
+                            ('string', 'initialSettings'), 
+                            ('string', 'resultCallback')],
+                        returnType="int")
 
-            mplugin.registerFileTranslator( translatorModule.kPluginTranslatorTypeName, 
-                None, 
-                translatorModule.translatorCreator,
-                translatorOptions,
-                translatorModule.kPluginTranslatorDefaultOptions)
-            print( "%s - Registered translator : %s" % (kPluginName, 
-                translatorModule.kPluginTranslatorTypeName))
+                mplugin.registerFileTranslator( translatorModule.kPluginTranslatorTypeName, 
+                    None, 
+                    translatorModule.translatorCreator,
+                    translatorOptions,
+                    translatorModule.kPluginTranslatorDefaultOptions)
+                print( "%s - Registered translator : %s" % (kPluginName, 
+                    translatorModule.kPluginTranslatorTypeName))
     except:
             sys.stderr.write( "%s - Failed to register node: %s\n" % (
                 kPluginName, translatorModule.kPluginTranslatorTypeName) )
@@ -259,7 +264,8 @@ def uninitializePlugin(mobject):
     # Unregister translator nodes
     try:
         for translatorModule in translatorModules:
-            mplugin.deregisterFileTranslator( translatorModule.kPluginTranslatorTypeName )
+            if translatorModule:
+                mplugin.deregisterFileTranslator( translatorModule.kPluginTranslatorTypeName )
     except:
             sys.stderr.write( "Failed to unregister node: %s\n" % translatorModule.kPluginTranslatorTypeName )
             raise

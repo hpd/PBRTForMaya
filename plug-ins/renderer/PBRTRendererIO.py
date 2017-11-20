@@ -2351,7 +2351,7 @@ def exportGeometry(geom, renderDir, objectToExportedFiles, renderSettings):
     else:
         shape = cmds.listRelatives(geom, shapes=True, fullPath=True)[0]
 
-        if usePLYExport and 'ply' in translators:
+        if usePLYExport and translators and 'ply' in translators:
             #motionBlur = cmds.getAttr( "%s.%s" % (renderSettings, "motionBlur"))
             #space = 'object' if motionBlur else 'world'
             space = 'object'
@@ -2772,7 +2772,9 @@ def createGeometryAndMaterials(renderDir, renderSettings):
         # - Geometry can be instanced
         if shapeElement['identifier'] == "Object":
             # Only support transforms on procedural geometry or ply-exports 
+            translators = cmds.pluginInfo( "PBRTForMaya", query=True, translator=True )
             usePLYExport = cmds.getAttr( "%s.%s" % (renderSettings, "usePLYExport"))
+            usePLYExport = usePLYExport and translators and 'ply' in translators
 
             # when motion blur is on
             #motionBlur = cmds.getAttr( "%s.%s" % (renderSettings, "motionBlur"))
