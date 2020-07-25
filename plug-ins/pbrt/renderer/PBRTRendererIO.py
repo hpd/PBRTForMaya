@@ -140,7 +140,7 @@ def getTexturePath(nodeName):
             #print( "Animated texture path : %s" % fileTexture )
 
     if fileTexture:
-        fileTexture = os.path.relpath( fileTexture, renderDir )
+        fileTexture = os.path.relpath( fileTexture, renderDir ).replace("\\", "/")
 
     return fileTexture
 

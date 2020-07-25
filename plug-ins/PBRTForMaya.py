@@ -4,34 +4,35 @@ import pkgutil
 import sys
 
 import maya.cmds as cmds
+import maya.OpenMaya as OpenMaya
 import maya.OpenMayaMPx as OpenMayaMPx
 
 kPluginName = "PBRTForMaya"
 kPluginCompany = "Duiker Research"
 
-from util.mayautil import createMelPythonCallback
-
-# Make sure translator modules can be found
-pluginDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-sys.path.append(os.path.join(pluginDir, "translators"))
+from pbrt.util.mayautil import createMelPythonCallback
 
 # Import modules for renderer, settings, material, lights and volumes
-from renderer import (
+from pbrt.renderer import (
     PBRTRenderSettings,
     PBRTRenderer)
 
 try:
-    from translators import ply
+    # Make sure translator modules can be found
+    pluginDir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    sys.path.append(os.path.join(pluginDir, "pbrt", "translators"))
+
+    from pbrt.translators import ply
 except Exception, e:
     print( "%s - Unable to load .ply format translator" % (kPluginName))
     print( repr(e) )
     ply = None
 
-import lights
-import materials
-import shapes
-import textures
-import volumes
+import pbrt.lights
+import pbrt.materials
+import pbrt.shapes
+import pbrt.textures
+import pbrt.volumes
 
 __author__ = 'Haarm-Pieter Duiker'
 __copyright__ = 'Copyright (C) 2016 - Duiker Research Corp'
@@ -61,33 +62,33 @@ translatorModules = [
     ply]
 
 # Get the modules in materials, lights, textures, volumes
-materialsPath = os.path.dirname(materials.__file__)
+materialsPath = os.path.dirname(pbrt.materials.__file__)
 materialsNodeNames = [name for _, name, _ in pkgutil.iter_modules([materialsPath])]
 
-lightsPath = os.path.dirname(lights.__file__)
+lightsPath = os.path.dirname(pbrt.lights.__file__)
 lightsNodeNames = [name for _, name, _ in pkgutil.iter_modules([lightsPath])]
 
-texturesPath = os.path.dirname(textures.__file__)
+texturesPath = os.path.dirname(pbrt.textures.__file__)
 texturesNodeNames = [name for _, name, _ in pkgutil.iter_modules([texturesPath])]
 
-volumesPath = os.path.dirname(volumes.__file__)
+volumesPath = os.path.dirname(pbrt.volumes.__file__)
 volumesNodeNames = [name for _, name, _ in pkgutil.iter_modules([volumesPath])]
 
-shapesPath = os.path.dirname(shapes.__file__)
+shapesPath = os.path.dirname(pbrt.shapes.__file__)
 shapesNodeNames = [name for _, name, _ in pkgutil.iter_modules([shapesPath])]
 
 shadingNodeGroups = { 
-    'materials' : materialsNodeNames,
-    'lights' : lightsNodeNames,
-    'textures' : texturesNodeNames,
-    'volumes' : volumesNodeNames,
-    'shapes' : shapesNodeNames,
+    'pbrt.materials' : materialsNodeNames,
+    'pbrt.lights' : lightsNodeNames,
+    'pbrt.textures' : texturesNodeNames,
+    'pbrt.volumes' : volumesNodeNames,
+    'pbrt.shapes' : shapesNodeNames,
 }
 
 #
 # AE Templates
 #
-from templates import (
+from pbrt.templates import (
     AEPBRTFourierMaterialTemplate,
     AEPBRTPlyMeshGeometryTemplate,
     AEPBRTIncludeGeometryTemplate,

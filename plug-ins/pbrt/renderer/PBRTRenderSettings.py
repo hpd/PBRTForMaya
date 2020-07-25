@@ -188,7 +188,7 @@ def nodeInitializer():
         PBRTRenderSetting.addStringAttribute(sAttr, "mOIIOToolPath", "oiiotoolPath", "oiiotp", defaultOIIOToolPath)
 
         # Version variables
-        PBRTRenderSetting.addStringAttribute(sAttr,  "mPBRTVersion", "PBRTVersion", "pbrtv", "v3 Book")
+        PBRTRenderSetting.addStringAttribute(sAttr,  "mPBRTVersion", "PBRTVersion", "pbrtv", "v3 Master Branch")
 
         # Sampler variables
         PBRTRenderSetting.addStringAttribute(sAttr,  "mSampler", "sampler", "smpl", "Halton")
