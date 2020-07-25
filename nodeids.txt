@@ -20,6 +20,7 @@ materials   disney              0x8704E
 
 lights      area.py             0x87050
 lights      infinite.py         0x87051
+lights      sunsky.py           0x8706C
 
 shapes      plymesh.py          0x87052
 shapes      cone.py             0x87053

@@ -1433,6 +1433,73 @@ def createLightInfinite(light):
 
     return lightElement
 
+def createLightSunSky(light, renderSettings):
+    # Generate env map
+    resolution = cmds.getAttr(light+".resolution")
+    albedo = cmds.getAttr(light+".albedo")
+    elevation = cmds.getAttr(light+".elevation")
+    turbidity = cmds.getAttr(light+".turbidity")
+
+    # Convert OBJ to PBRT
+    pbrtPath = cmds.getAttr( "%s.%s" % (renderSettings, "PBRTPath"))
+    imgtoolPath = os.path.join(os.path.split(pbrtPath)[0], 'imgtool')
+
+    envMapFileName = "generated_sunsky.exr"
+
+    envMapFileName = os.path.join(renderDir, envMapFileName)
+
+    args = [
+        "makesky", 
+        "--albedo", str(albedo),
+        "--elevation", str(elevation),
+        "--outfile", str(envMapFileName),
+        "--turbidity", str(turbidity),
+        "--resolution", str(resolution)
+        ]
+    imgtool = Process(description='generate sun sky environment map',
+        cmd=imgtoolPath,
+        args=args)
+    imgtool.execute()
+
+    envMapFileNameRelative = os.path.relpath( envMapFileName, renderDir )
+
+    # Generate scene element
+    lightElement = None
+    if envMapFileName:
+        nsamples = cmds.getAttr(light+".nsamples")
+
+        lightElement = AttributeElement()
+
+        translateElements = []
+
+        rotate = cmds.getAttr("%s.rotate" % light )[0]
+        if rotate[1] != 0.0:
+            rotateY = RotateElement(( rotate[1], 0.0, 1.0, 0.0))
+            translateElements.append( rotateY )
+
+        rotate1 = RotateElement(( 90.0, 0.0, 1.0, 0.0))
+        rotate2 = RotateElement((-90.0, 1.0, 0.0, 0.0))
+        scale = ScaleElement((-1, 1, 1))
+
+        translateElements.append( rotate1 )
+        translateElements.append( rotate2 )
+        translateElements.append( scale )
+
+        # Create a structure to be written
+        infiniteLightElement = LightElement('infinite')
+
+        textureElements = []
+        addTexturedColorAttribute(light, 'luminance', infiniteLightElement, 
+            textureElements, rendererParameter="L")
+
+        infiniteLightElement.addAttributeInteger('nsamples', nsamples)
+        infiniteLightElement.addAttributeString('mapname', envMapFileNameRelative)
+
+        lightElement.addChildren( translateElements )
+        lightElement.addChild( infiniteLightElement )
+
+    return lightElement
+
 def createLightDirectional(light):
     intensity = cmds.getAttr(light+".intensity")
 
@@ -1663,19 +1730,22 @@ def isVisible(object):
     
     return visible
 
-def createLightElements():
+def createLightElements(renderSettings):
     # Gather visible lights
     lights = cmds.ls(type="light", long=True)
     lights = [x for x in lights if isVisible(x)]
 
-    infiniteLights = cmds.ls(type="PBRTInfiniteLight", long=True)
+    infiniteLights1 = cmds.ls(type="PBRTInfiniteLight", long=True)
+    infiniteLights2 = cmds.ls(type="PBRTSunSkyLight", long=True)
+    infiniteLights = infiniteLights1
+    infiniteLights.extend( infiniteLights2 )
     infiniteLights = [x for x in infiniteLights if isVisible(x)]
 
     # Warn if multiple environment lights are active
     if infiniteLights and len(infiniteLights)>1:
         if exportVerbosity:
             print( "\n" )
-            print( "Cannot specify more than one environment light (PBRTInfiniteLight)" )
+            print( "Cannot specify more than one environment light (PBRTInfiniteLight, PBRTSunSkyLight)" )
             print( "Using first infinite light : %s" % infiniteLights[0] )
             print( "\n" )
 
@@ -1695,7 +1765,11 @@ def createLightElements():
     # Gather element definitions for 'infinite' Environment lights
     if infiniteLights:
         infinite = infiniteLights[0]
-        lightElements.append( createLightInfinite(infinite) )
+        lightType = cmds.nodeType(infinite)
+        if lightType == "PBRTInfiniteLight":
+            lightElements.append( createLightInfinite(infinite) )
+        elif lightType == "PBRTSunSkyLight":
+            lightElements.append( createLightSunSky(infinite, renderSettings) )
 
     return lightElements
 
@@ -2910,7 +2984,7 @@ def exportScene(outFileName, exportDir, renderSettings, verboseExport=False):
     worldElement = WorldElement()
 
     # Create lights
-    lightElements = createLightElements()
+    lightElements = createLightElements(renderSettings)
     if lightElements:
         worldElement.addChildren( lightElements, separator=True )
 
